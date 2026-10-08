@@ -1,1 +1,61 @@
-<h1>TapFidelity Proyect</h1><p>Sitio en construcción</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TapFidelity - Testing Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 15px 30px;
+            text-decoration: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-client {
+            background-color: #3498db;
+        }
+        .btn-client:hover {
+            background-color: #2980b9;
+        }
+        .btn-admin {
+            background-color: #e74c3c;
+        }
+        .btn-admin:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>TapFidelity Proyect - Menú de Pruebas</h1>
+    <p>Selecciona a qué vista deseas ingresar para probar:</p>
+    
+    <div class="container">
+        <!-- Enlaces directos a los archivos HTML para cuando se usa GitHub Pages o Live Server -->
+        <a href="app/views/client/index.html" class="btn btn-client">📱 Vista Cliente (PWA)</a>
+        <a href="app/views/admin/login.html" class="btn btn-admin">💻 Vista Administrador</a>
+    </div>
+</body>
+</html>
