@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Fidelización Physical-Digital</title>
+  <link rel="stylesheet" href="/views/admin/styles.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div>
+        <div class="brand-header">
+          <span>PANEL DE CONTROL</span>
+          <h2>Encargado</h2>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item active">📊 Métricas & Analítica</li>
+          <li class="nav-item" onclick="document.getElementById('section-settings-form').scrollIntoView({behavior: 'smooth'});">⚙️ Ajustes & PIN</li>
+          <li class="nav-item" onclick="document.getElementById('section-clients-table').scrollIntoView({behavior: 'smooth'});">👥 Clientes Registrados</li>
+        </ul>
+      </div>
+
+      <button id="btn-admin-logout" class="btn-gold" style="background: rgba(200, 109, 81, 0.2); color: #e89981;">
+        Cerrar Sesión
+      </button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <h1 class="page-title">Indicadores de Fidelización (Métricas SMART)</h1>
+
+      <!-- KPI Cards Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Clientes Únicos</div>
+          <div class="kpi-value" id="kpi-total-clients">0</div>
+          <div class="kpi-sub">Total registrados en la PWA</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-title">Visitas Hoy</div>
+          <div class="kpi-value" id="kpi-visits-today">0</div>
+          <div class="kpi-sub" id="kpi-visits-week">0 esta semana</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-title">Sellos Emitidos</div>
+          <div class="kpi-value" id="kpi-total-stamps">0</div>
+          <div class="kpi-sub">Taps NFC / QR validados</div>
+        </div>
+
+        <div class="kpi-card" style="border-left-color: var(--accent-terracotta);">
+          <div class="kpi-title">Premios Canjeados</div>
+          <div class="kpi-value" id="kpi-total-redemptions">0</div>
+          <div class="kpi-sub">Verificados por PIN de 4 dígitos</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-title">Tasa de Retención</div>
+          <div class="kpi-value" id="kpi-retention-rate">0%</div>
+          <div class="kpi-sub" id="kpi-recurrent-clients">0 clientes recurrentes</div>
+        </div>
+      </div>
+
+      <!-- Settings & PIN Form -->
+      <section id="section-settings-form" class="admin-card">
+        <h3>Configuración del Programa y Seguridad de Canje</h3>
+        
+        <form id="form-update-settings" class="settings-grid">
+          <div class="form-group">
+            <label for="setting-pin">PIN de Validación (4 dígitos)</label>
+            <input type="text" id="setting-pin" class="form-control" maxlength="4" placeholder="Ej. 1234" required>
+            <span style="font-size: 0.78rem; color: #6e6452;">El mozo o cajero utilizará este PIN en la PWA del cliente para autorizar premios.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="setting-reward">Premio / Beneficio Vigente</label>
+            <input type="text" id="setting-reward" class="form-control" placeholder="Ej. Café gratis + 20% descuento" required>
+            <span style="font-size: 0.78rem; color: #6e6452;">Texto del beneficio visible en la tarjeta virtual del cliente.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="setting-cooldown">Ventana Antifraude (Horas)</label>
+            <input type="number" id="setting-cooldown" class="form-control" min="1" max="48" step="0.5" value="12" required>
+            <span style="font-size: 0.78rem; color: #6e6452;">Tiempo mínimo de espera para que un cliente pueda sumar 2 sellos seguidos.</span>
+          </div>
+
+          <div style="grid-column: 1 / -1;">
+            <button type="submit" class="btn-gold">Guardar Cambios de Configuración</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Registered Clients List -->
+      <section id="section-clients-table" class="admin-card">
+        <h3>Directorio de Clientes y Recurrencia</h3>
+        
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>WhatsApp</th>
+                <th>Sellos Acumulados</th>
+                <th>Premios Canjeados</th>
+                <th>Última Visita</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-clients">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 20px; color: #787060;">Cargando base de datos de clientes...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/views/admin/admin.js"></script>
+</body>
+</html>

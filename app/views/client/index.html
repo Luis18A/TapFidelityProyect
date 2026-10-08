@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Club de Fidelización | Tap & Rewards</title>
+  <link rel="stylesheet" href="/views/client/styles.css">
+  <link rel="manifest" href="/public/manifest.json">
+  <meta name="theme-color" content="#192119">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Branding Header -->
+    <header class="header-brand">
+      <span class="brand-badge">SAN SALVADOR DE JUJUY</span>
+      <h1 class="brand-title">Club de Fidelización</h1>
+      <p class="brand-subtitle">Physical-Digital Tap & Rewards</p>
+    </header>
+
+    <!-- SECTION 1: REGISTRATION / LOGIN -->
+    <div id="section-register" class="luxury-card" style="display: none;">
+      <h2 class="card-title">Bienvenido</h2>
+      <p class="card-subtitle">Ingresa tu Nombre y WhatsApp para activar tu tarjeta digital de sellos al instante.</p>
+      
+      <form id="form-register">
+        <div class="form-group">
+          <label class="form-label" for="input-name">Nombre Completo</label>
+          <input type="text" id="input-name" class="form-input" placeholder="Ej. Carlos Mendoza" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="input-whatsapp">Número de WhatsApp</label>
+          <input type="tel" id="input-whatsapp" class="form-input" placeholder="Ej. 3884123456" required>
+        </div>
+
+        <button type="submit" class="btn-pill">
+          <span>Activar Mi Tarjeta</span>
+          <span class="btn-icon">➔</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- SECTION 2: CARD STAMPS DASHBOARD -->
+    <div id="section-card" class="luxury-card" style="display: none;">
+      
+      <div class="user-bar">
+        <div>
+          <div class="user-name" id="user-display-name">Cliente</div>
+          <div class="user-phone" id="user-display-phone">+54 388...</div>
+        </div>
+        <button id="btn-change-user" class="btn-logout">Salir</button>
+      </div>
+
+      <div class="reward-box">
+        <div class="reward-label">Beneficio Vigente</div>
+        <div class="reward-name" id="reward-display-text">Cargando beneficio...</div>
+      </div>
+
+      <div class="card-subtitle" style="text-align: left; margin-bottom: 12px; font-weight: 500;">
+        Tu Progreso (5 Visitas = 1 Premio)
+      </div>
+
+      <!-- 5 Stamp Slots Grid -->
+      <div class="stamps-grid">
+        <div class="stamp-slot" id="slot-1">1</div>
+        <div class="stamp-slot" id="slot-2">2</div>
+        <div class="stamp-slot" id="slot-3">3</div>
+        <div class="stamp-slot" id="slot-4">4</div>
+        <div class="stamp-slot reward" id="slot-5">5</div>
+      </div>
+
+      <div id="cooldown-container" style="display: none;" class="cooldown-banner">
+        <span>⏳</span>
+        <span id="cooldown-text">Enfriamiento activo...</span>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+        <button id="btn-add-stamp" class="btn-pill">
+          <span>+ Sumar Sello de Visita</span>
+          <span class="btn-icon">★</span>
+        </button>
+
+        <button id="btn-open-redeem" class="btn-pill" style="background: #c86d51; color: #fff; display: none;">
+          <span>🎁 ¡Reclamar Premio!</span>
+          <span class="btn-icon">➔</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL: PIN KEYPAD FOR IN-PERSON REDEMPTION -->
+  <div id="modal-pin" class="modal-overlay">
+    <div class="modal-content">
+      <h3 class="card-title">Validación del Encargado</h3>
+      <p class="card-subtitle" style="margin-bottom: 12px;">Entrega el teléfono al mozo o cajero para ingresar el PIN de 4 dígitos.</p>
+      
+      <div class="pin-display">
+        <div class="pin-dot" id="dot-1"></div>
+        <div class="pin-dot" id="dot-2"></div>
+        <div class="pin-dot" id="dot-3"></div>
+        <div class="pin-dot" id="dot-4"></div>
+      </div>
+
+      <div class="keypad">
+        <button class="key-btn" onclick="pressKey('1')">1</button>
+        <button class="key-btn" onclick="pressKey('2')">2</button>
+        <button class="key-btn" onclick="pressKey('3')">3</button>
+        <button class="key-btn" onclick="pressKey('4')">4</button>
+        <button class="key-btn" onclick="pressKey('5')">5</button>
+        <button class="key-btn" onclick="pressKey('6')">6</button>
+        <button class="key-btn" onclick="pressKey('7')">7</button>
+        <button class="key-btn" onclick="pressKey('8')">8</button>
+        <button class="key-btn" onclick="pressKey('9')">9</button>
+        <button class="key-btn" onclick="clearPin()" style="font-size: 1rem;">C</button>
+        <button class="key-btn" onclick="pressKey('0')">0</button>
+        <button class="key-btn" onclick="closePinModal()" style="font-size: 1rem; color: #a84732;">✕</button>
+      </div>
+
+      <div id="pin-error-msg" style="color: #c86d51; font-size: 0.85rem; margin-top: 14px; display: none;"></div>
+    </div>
+  </div>
+
+  <!-- CELEBRATION OVERLAY -->
+  <div id="modal-celebration" class="modal-overlay">
+    <div class="modal-content" style="background: linear-gradient(135deg, #fbf7ee 0%, #f4e8cb 100%);">
+      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎉</div>
+      <h2 class="card-title" style="color: #242d23;">¡Premio Entregado!</h2>
+      <p class="card-subtitle" id="celebration-reward-text" style="color: #524734; font-size: 1.1rem; font-weight: 600;">
+        Café de Especialidad
+      </p>
+      <p style="font-size: 0.85rem; color: #736750; margin-bottom: 24px;">
+        Gracias por ser parte de nuestra comunidad. ¡Te esperamos en tu próxima visita!
+      </p>
+      <button class="btn-pill" onclick="closeCelebration()">
+        <span>Continuar</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="/views/client/app.js"></script>
+</body>
+</html>

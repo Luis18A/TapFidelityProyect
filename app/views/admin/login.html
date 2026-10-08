@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Encargado | Panel de Administración</title>
+  <link rel="stylesheet" href="/views/admin/styles.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; padding: 20px;">
+
+  <div style="width: 100%; max-width: 400px;" class="admin-card">
+    <div class="brand-header" style="margin-bottom: 24px;">
+      <span style="color: #6e6452;">CONTROL Y GESTIÓN</span>
+      <h2 style="color: #192119; font-size: 2rem;">Acceso Encargado</h2>
+    </div>
+
+    <form id="form-admin-login">
+      <div class="form-group">
+        <label for="admin-user">Usuario</label>
+        <input type="text" id="admin-user" class="form-control" value="admin" required>
+      </div>
+
+      <div class="form-group">
+        <label for="admin-pass">Contraseña</label>
+        <input type="password" id="admin-pass" class="form-control" value="admin123" required>
+      </div>
+
+      <button type="submit" class="btn-gold" style="width: 100%; margin-top: 10px;">
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <div id="login-error" style="color: #c86d51; font-size: 0.85rem; margin-top: 14px; text-align: center; display: none;"></div>
+  </div>
+
+  <script>
+    document.getElementById("form-admin-login").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("admin-user").value;
+      const password = document.getElementById("admin-pass").value;
+
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (data.success && data.token) {
+          localStorage.setItem("admin_token", data.token);
+          window.location.href = "/admin/dashboard";
+        } else {
+          const errBox = document.getElementById("login-error");
+          errBox.textContent = data.message || "Credenciales incorrectas";
+          errBox.style.display = "block";
+        }
+      } catch (err) {
+        alert("Error al conectar con el servidor.");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "short_name": "Fidelización",
+  "name": "Club de Fidelización Physical-Digital",
+  "icons": [
+    {
+      "src": "/public/assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/public/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#192119",
+  "theme_color": "#192119",
+  "display": "standalone",
+  "orientation": "portrait"
+}
